@@ -140,7 +140,7 @@ GetNearestServiceUnit <- function(
 		"DetailedServiceUnits"
 	)
 	
-	x <- get_json_schools(
+	x <- get_json_nearest(
 		path = "ServiceGuideService",
 		endpoints = endpoints,
 		query = list(
