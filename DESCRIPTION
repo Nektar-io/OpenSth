@@ -1,0 +1,15 @@
+Package: OpenSth
+Type: Package
+Title: OpenSth
+Version: 0.1
+Date: 2014-01-04
+Author: Love Hansson
+Maintainer: Love Hansson <love.hansson@gmail.com>
+Description: An R package for the LvWS API
+License: AGPLv3
+Depends:
+    httr,
+    XML,
+    RJSONIO,
+    plyr,
+    stringr
