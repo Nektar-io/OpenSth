@@ -80,12 +80,14 @@ build_url <- function(url, path, params) {
 #' @param endpoints Node hierarchy
 #' @param query URL query
 #' @param n Number of rows to return
-get_json_schools <- function(path, endpoints, query, n) {
+get_json_nearest <- function(path, endpoints, query, n) {
 	url <- build_url(
 		url = .url,
 		path = c("ServiceGuideService",endpoints,"json"),
 		params = query
 	)
+	cat(url, "\n")
+	
 	x <- paste(readLines(url, warn = FALSE), collapse="")
 	l <- fromJSON(x)
 	
@@ -125,38 +127,31 @@ get_json_schools <- function(path, endpoints, query, n) {
 #' Get data for schools from the Service Unit API
 #' 
 #' @export
-GetServiceUnitSchools <- function(
-	endpoints = c("ServiceUnitTypeGroups","7","DetailedServiceUnits"),
-	x = 6589642,
-	y = 1620174,
+GetNearestServiceUnit <- function(
+	unitType = 7,
+	coords = c(6577574, 1627933),
+	n = 5,
 	apiKey = .serviceGuideKey,
 	...
 ) {
+	endpoints <- c(
+		"ServiceUnitTypeGroups",
+		as.character(unitType),
+		"DetailedServiceUnits"
+	)
+	
 	x <- get_json_schools(
 		path = "ServiceGuideService",
 		endpoints = endpoints,
 		query = list(
 			apiKey = apiKey,
-			geographicalPosition = paste(x,y,sep=","),
+			geographicalPosition = paste(coords,collapse=","),
 			sortBy = "DistanceToGeographicalPosition",
 			sortDirection = "Ascending"
 		),
-		n = 5
+		n = n
 	)
 	
 	return(x)
-	
 }
 
-
-
-require(plyr)
-list_to_table <- function(x) {
-	do.call("rbind.fill",
-			lapply(x, function(y) {
-				data.frame(t(unlist(y)))
-			})
-	)
-}
-
-list_to_table(head(l))
