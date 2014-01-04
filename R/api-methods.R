@@ -155,3 +155,17 @@ GetNearestServiceUnit <- function(
 	return(x)
 }
 
+
+#' Calculate distance in RT90 2.5
+#' 
+#' Calculate distance in RT90 2.5
+#' 
+#' @param c1 C1
+#' @param c2 C2
+#' @export
+
+GetRTDistance <- function(c1, c2) {
+	sqrt(
+		(c1[1] - c2[1])^2 + (c1[2] - c2[2])^2
+	)
+}
