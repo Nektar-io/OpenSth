@@ -25,4 +25,11 @@ addr <- as.character(school1[school1$Id == "StreetAddress","Value"])
 addr <- str_split(addr, " ", n=2)[[1]]
 street <- addr[1]
 number  <- as.integer(addr[2])
-addrObj <- sthAddr(street, number)
+addrObj1 <- sthAddr(street, number)
+
+school5 <- LvWS:::list_to_table(closestSchools[[5]]$Attributes)
+addr <- as.character(school5[school5$Id == "StreetAddress","Value"])
+addr <- str_split(addr, " ", n=2)[[1]]
+street <- addr[1]
+number  <- as.integer(addr[2])
+addrObj5 <- sthAddr(street, number)
