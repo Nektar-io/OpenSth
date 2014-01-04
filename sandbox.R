@@ -33,3 +33,7 @@ addr <- str_split(addr, " ", n=2)[[1]]
 street <- addr[1]
 number  <- as.integer(addr[2])
 addrObj5 <- sthAddr(street, number)
+
+# Mät avståndet från min adress till skolorna
+GetRTDistance(jag$RT90, addrObj1$RT90)
+GetRTDistance(jag$RT90, addrObj5$RT90)
