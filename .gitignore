@@ -7,3 +7,6 @@
 
 # RData files
 *.RData
+
+# Don't include any more manpages for now (remove this before release)
+*.Rd
