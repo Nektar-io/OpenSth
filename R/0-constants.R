@@ -9,7 +9,7 @@
 .placesUrl <- "http://api.stockholm.se"
 
 .lvwsUrl <- "http://openstreetws.stockholm.se/"
-.lwvsPath <- "LvWS-2.2/Lv.asmx"
+.lvwsPath <- "LvWS-2.2/Lv.asmx"
 
 
 
