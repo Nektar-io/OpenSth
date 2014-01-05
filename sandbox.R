@@ -1,6 +1,4 @@
 require(projectX)
-require(LvWS)
-
 
 ## Skapa ett adressobjekt
 jag <- sthAddr("Erkenskroken", 24)
@@ -14,14 +12,14 @@ closestLeisure <- GetNearestServiceUnit(2, jag$RT90)
 
 
 # Hämta data för närmaste skolan
-school1 <- LvWS:::list_to_table(closestSchools[[1]]$Attributes)
+school1 <- list_to_table(closestSchools[[1]]$Attributes)
 addr <- as.character(school1[school1$Id == "StreetAddress","Value"])
 addr <- str_split(addr, " ", n=2)[[1]]
 street <- addr[1]
 number  <- as.integer(addr[2])
 addrObj1 <- sthAddr(street, number)
 
-school5 <- LvWS:::list_to_table(closestSchools[[5]]$Attributes)
+school5 <- list_to_table(closestSchools[[5]]$Attributes)
 addr <- as.character(school5[school5$Id == "StreetAddress","Value"])
 addr <- str_split(addr, " ", n=2)[[1]]
 street <- addr[1]
