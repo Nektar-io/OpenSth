@@ -120,20 +120,6 @@ GetStreetNames <- function(
 	unlist(x)
 }
 
-#' Convert list to table
-#' 
-#' Flattens out a nested list 
-#' 
-#' @param x list
-list_to_table <- function(x) {
-	do.call(
-		"rbind.fill",
-		lapply(x, function(y) {
-			data.frame(t(unlist(y)))
-		})
-	)
-}
-
 #' Get coords in different coordinate systems from LvWS
 #' 
 #' Get coords in different coordinate systems from WKT (e.g. RT90 2.5 from WGS 84) through the LvWS API

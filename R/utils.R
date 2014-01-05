@@ -34,3 +34,18 @@ GetRTDistance <- function(c1, c2) {
 		(c1[1] - c2[1])^2 + (c1[2] - c2[2])^2
 	)
 }
+
+
+#' Convert list to table
+#' 
+#' Flattens out a nested list 
+#' 
+#' @param x list
+list_to_table <- function(x) {
+	do.call(
+		"rbind.fill",
+		lapply(x, function(y) {
+			data.frame(t(unlist(y)))
+		})
+	)
+}
