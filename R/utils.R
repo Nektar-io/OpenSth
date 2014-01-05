@@ -41,6 +41,7 @@ GetRTDistance <- function(c1, c2) {
 #' Flattens out a nested list 
 #' 
 #' @param x list
+#' @export
 list_to_table <- function(x) {
 	do.call(
 		"rbind.fill",

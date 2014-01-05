@@ -188,13 +188,22 @@ GetNearestServiceUnit <- function(
 	coords = c(6577574, 1627933),
 	n = 5,
 	apiKey = .unitKey,
+	groups = TRUE,
 	...
 ) {
-	endpoints <- c(
-		"ServiceUnitTypeGroups",
-		as.character(unitType),
-		"DetailedServiceUnits"
-	)
+	if (groups) {
+		endpoints <- c(
+			"ServiceUnitTypeGroups",
+			as.character(unitType),
+			"DetailedServiceUnits"
+		)
+	} else {
+		endpoints <- c(
+			"ServiceUnitTypes",
+			as.character(unitType),
+			"DetailedServiceUnits"
+		)
+	}
 	
 	x <- get_json_nearest(
 		path = "ServiceGuideService",
@@ -210,7 +219,7 @@ GetNearestServiceUnit <- function(
 	
 	# TODO: NOT FINISHED
 	# Restructure the format of attributes
-	for(i in length(x)) {
+	for(i in 1:length(x)) {
 		x[[i]]$Attributes <- sapply(x[[i]]$Attributes, function(i) {
 			new <- list()
 			new[[i$Id]] <- list(
