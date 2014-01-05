@@ -1,6 +1,7 @@
 require(projectX)
 require(LvWS)
 
+
 ## Skapa ett adressobjekt
 jag <- sthAddr("Erkenskroken", 24)
 
