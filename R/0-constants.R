@@ -1,6 +1,6 @@
 # API keys
 .placesKey <- "19d54f2ed3f842569c94f4375175957e"
-.serviceGuideKey <- "0eb1055a722f4b65986f545cb67bd44e"
+.unitKey <- "0eb1055a722f4b65986f545cb67bd44e"
 .lvwsKey <- "74c448e2-e118-4ed7-aceb-e0a2864ed1a2"
 
 

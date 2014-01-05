@@ -1,25 +1,3 @@
-#' Build URL
-#' 
-#' Build API query URL 
-#' 
-#' @param url
-#' @param path
-#' @param params list of named parameters
- 
-build_url <- function(url, path, params) {
-	# Remove leadning and trailing slashes from all URL components
-	url <- str_replace_all(url, "^[/]+|[/]+$", "")
-	path <- str_replace_all(path, "^[/]+|[/]+$", "")
-	
-	# Create the URL and param parts
-	full_url <- paste(url, paste(path, collapse="/"), sep="/")
-	full_params <- paste(names(params),params, sep="=", collapse="&")
-	
-	# Create and return the full query
-	full_query <- paste(full_url, full_params, sep="?")
-	return(full_query)
-}
-
 #' Get XML from LvWS
 #' 
 #' Get XML data from the LvWS API.
@@ -220,16 +198,16 @@ get_json_nearest <- function(path, endpoints, query, n) {
 
 
 
-#' Get Service Unit data for schools
+#' Get data on the n nearest Service Units
 #' 
-#' Get data for schools from the Service Unit API
+#' Get data on the n nearest Service Units from the Service Unit API
 #' 
 #' @export
 GetNearestServiceUnit <- function(
 	unitType = 7,
 	coords = c(6577574, 1627933),
 	n = 5,
-	apiKey = .serviceGuideKey,
+	apiKey = .unitKey,
 	...
 ) {
 	endpoints <- c(
@@ -251,19 +229,4 @@ GetNearestServiceUnit <- function(
 	)
 	
 	return(x)
-}
-
-
-#' Calculate distance in RT90 2.5
-#' 
-#' Calculate distance in RT90 2.5
-#' 
-#' @param c1 C1
-#' @param c2 C2
-#' @export
-
-GetRTDistance <- function(c1, c2) {
-	sqrt(
-		(c1[1] - c2[1])^2 + (c1[2] - c2[2])^2
-	)
 }
