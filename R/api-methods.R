@@ -5,9 +5,9 @@
 #' 
 #' @param path URL path
 #' @param query URL query
-lwvs_get_xml <- function(path, query) {
+lvws_get_xml <- function(path, query) {
 	url <- modify_url(
-		url = .lwvsUrl,
+		url = .lvwsUrl,
 		path = file.path(.lvwsPath, path),
 		query = query
 	)
@@ -40,7 +40,7 @@ lwvs_get_xml <- function(path, query) {
 lvws_get_parking_places <- function(
 	foreskrift = "ptillaten",
 	operation = file.path("street", streetName),
-	apiKey = .lwvsKey,
+	apiKey = .lvwsKey,
 	streetName = NULL
 ) {
 	if (is.null(operation)) stop("Please provide streetName or operation")
@@ -86,7 +86,7 @@ GetAddresses <- function(
 	postalAreaPattern = "",
 	includeAddressConnectionsForTrafficTypes = "0"
 ) {
-	x <- lwvs_get_xml(path = "GetAddresses", query = as.list(environment()))
+	x <- lvws_get_xml(path = "GetAddresses", query = as.list(environment()))
 	xmlToDataFrame(x, stringsAsFactors = FALSE)
 }
 
@@ -114,7 +114,7 @@ GetStreetNames <- function(
 	optionalPostalArea = "",
 	optionalPostalCode = ""
 ) {
-	x <- lwvs_get_xml(path = "GetStreetNames", query = as.list(environment()))
+	x <- lvws_get_xml(path = "GetStreetNames", query = as.list(environment()))
 	x <- xmlToList(x, simplify = TRUE)
 	x <- x[rownames(x) %in% "StreetName"]
 	unlist(x)
@@ -138,7 +138,7 @@ GetCoords <- function(
 	WKTx <- strings[1]
 	WKTy <- strings[2]
 	
-	coords <- lwvs_get_xml(path = "TransformGeometry", query = list(
+	coords <- lvws_get_xml(path = "TransformGeometry", query = list(
 		apikey = apiKey,
 		wkt = paste("POINT (", WKTx, " ", WKTy, ")", sep=""),
 		fromSrid = 4326,
@@ -194,13 +194,22 @@ GetNearestServiceUnit <- function(
 	coords = c(6577574, 1627933),
 	n = 5,
 	apiKey = .unitKey,
+	groups = TRUE,
 	...
 ) {
-	endpoints <- c(
-		"ServiceUnitTypeGroups",
-		as.character(unitType),
-		"DetailedServiceUnits"
-	)
+	if (groups) {
+		endpoints <- c(
+			"ServiceUnitTypeGroups",
+			as.character(unitType),
+			"DetailedServiceUnits"
+		)
+	} else {
+		endpoints <- c(
+			"ServiceUnitTypes",
+			as.character(unitType),
+			"DetailedServiceUnits"
+		)
+	}
 	
 	x <- get_json_nearest(
 		path = "ServiceGuideService",
