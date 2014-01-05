@@ -2,7 +2,7 @@
 .placesKey <- "19d54f2ed3f842569c94f4375175957e"
 .unitKey <- "0eb1055a722f4b65986f545cb67bd44e"
 .lvwsKey <- "74c448e2-e118-4ed7-aceb-e0a2864ed1a2"
-
+.slKey <- "dk5ZlsqLXiEdyHYVfTR2y56GR63a6Ejs"
 
 # URLs and paths
 .unitUrl <- "http://api.stockholm.se"
