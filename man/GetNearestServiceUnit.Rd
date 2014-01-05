@@ -1,16 +1,12 @@
 \name{GetNearestServiceUnit}
 \alias{GetNearestServiceUnit}
-\title{Get Service Unit data}
+\title{Get data on the n nearest Service Units}
 \usage{
 GetNearestServiceUnit(unitType = 7, coords = c(6577574, 1627933), n = 5,
-  apiKey = .serviceGuideKey, ...)
+  apiKey = .unitKey, ...)
 }
 \description{
-Get data from the Service Unit API
-}
-\examples{
-\dontrun{
-GetServiceUnit(endpoints = "ServiceUnitTypes")
-}
+Get data on the n nearest Service Units from the Service
+Unit API
 }
 

@@ -22,7 +22,7 @@ lvws_get_xml <- function(path, query) {
 	}
 	
 	cat(url,"\n")
-	x <- paste(readLines(url, warn = FALSE), collapse="")
+	x <- paste(readLines(url, warn = F), collapse="")
 	xmlParse(x)
 }
 
@@ -34,14 +34,14 @@ lvws_get_xml <- function(path, query) {
 #' @examples
 #' \dontrun{
 #' # Get parking places at Birkagatan
-#' get_parking_places(streetName = "Birkagatan")
+#' GetStreetParking(streetName = "Birkagatan")
 #' }
 #' @export
-lvws_get_parking_places <- function(
+GetStreetParking <- function(
+	streetName = NULL,
 	foreskrift = "ptillaten",
 	operation = file.path("street", streetName),
-	apiKey = .lvwsKey,
-	streetName = NULL
+	apiKey = .lvwsKey
 ) {
 	if (is.null(operation)) stop("Please provide streetName or operation")
 	
@@ -53,16 +53,10 @@ lvws_get_parking_places <- function(
 			outputFormat = "json"
 		)
 	)
-	x <- paste0(readLines(url, warn = FALSE))
-	x <- fromJSON(x)
-	x <- list_to_table(x$features)
-	
-	# Remove geometry columns (to clean up result table a bit)
-	cols <- colnames(x)[grep("geometry.coordinates", colnames(x))]
-	new_col <- split(x[, cols], 1:nrow(x))
-	x <- x[, -grep("geometry.coordinates", colnames(x))]
-	x$geometry.coordinates <- new_col  # store them as a list
-	
+	x <- paste0(readLines(url, warn = F))
+	x <- fromJSON(x)$features
+	x <- remove_list_fields(x, c("geometry_name", "geometry"))
+	x <- list_to_table(x)	
 	return(x)
 }
 
@@ -87,7 +81,7 @@ GetAddresses <- function(
 	includeAddressConnectionsForTrafficTypes = "0"
 ) {
 	x <- lvws_get_xml(path = "GetAddresses", query = as.list(environment()))
-	xmlToDataFrame(x, stringsAsFactors = FALSE)
+	xmlToDataFrame(x, stringsAsFactors = F)
 }
 
 #' Get Street Names
@@ -115,7 +109,7 @@ GetStreetNames <- function(
 	optionalPostalCode = ""
 ) {
 	x <- lvws_get_xml(path = "GetStreetNames", query = as.list(environment()))
-	x <- xmlToList(x, simplify = TRUE)
+	x <- xmlToList(x, simplify = T)
 	x <- x[rownames(x) %in% "StreetName"]
 	unlist(x)
 }
@@ -176,7 +170,7 @@ get_json_nearest <- function(path, endpoints, query, n) {
 	)
 	cat(url, "\n")
 	
-	x <- paste(readLines(url, warn = FALSE), collapse="")
+	x <- paste(readLines(url, warn = F), collapse="")
 	l <- fromJSON(x)
 	
 	closestSchools <- head(l, n=n)
@@ -207,12 +201,32 @@ GetNearestServiceUnit <- function(
 		endpoints = endpoints,
 		query = list(
 			apiKey = apiKey,
-			geographicalPosition = paste(coords,collapse=","),
+			geographicalPosition = paste(coords, collapse = ","),
 			sortBy = "DistanceToGeographicalPosition",
 			sortDirection = "Ascending"
 		),
 		n = n
 	)
 	
+	# TODO: NOT FINISHED
+	# Restructure the format of attributes
+	for(i in length(x)) {
+		x[[i]]$Attributes <- sapply(x[[i]]$Attributes, function(i) {
+			new <- list()
+			new[[i$Id]] <- list(
+				Name = i$Name,
+				Value = i$Value,
+				Description = i$Description,
+				Group = i$Group,
+				GroupDescription = i$GroupDescription
+			)
+			return(new)
+		})
+	}
+	
+	# Remove some attributes that has a bad structure
+	x <- remove_list_fields(x, c("RelatedServiceUnits"))
+	
+	x <- list_to_table(x)
 	return(x)
 }
