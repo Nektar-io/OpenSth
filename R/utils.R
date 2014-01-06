@@ -5,6 +5,7 @@
 #' @param url
 #' @param path
 #' @param params list of named parameters
+#' @export
 
 build_url <- function(url, path, params) {
 	# Remove leadning and trailing slashes from all URL components
