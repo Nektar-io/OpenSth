@@ -51,3 +51,19 @@ list_to_table <- function(x) {
 		})
 	)
 }
+
+#' Remove list fields
+#' 
+#' Remove named fields (attributes) from a list.
+#' Helpful to use when tidying converted JSON-objects.
+#' 
+#' @param lst list
+#' @param names field names
+remove_list_fields <- function(lst, names) { 
+	lapply(lst, function(x) {
+		for(name in names) {
+			x[[name]] <- NULL
+		}
+		return(x)
+	})
+}
