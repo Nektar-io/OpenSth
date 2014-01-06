@@ -5,7 +5,7 @@
 #' 
 #' @param path URL path
 #' @param query URL query
-lvws_get_xml <- function(path, query) {
+lvws_get_xml <- function(path, query, verbose=FALSE) {
 	url <- modify_url(
 		url = .lvwsUrl,
 		path = file.path(.lvwsPath, path),
@@ -21,7 +21,8 @@ lvws_get_xml <- function(path, query) {
 		)
 	}
 	
-	cat(url,"\n")
+	if (verbose) { cat(url,"\n") }
+	
 	x <- paste(readLines(url, warn = F), collapse="")
 	xmlParse(x)
 }
@@ -162,13 +163,14 @@ GetCoords <- function(
 #' @param endpoints Node hierarchy
 #' @param query URL query
 #' @param n Number of rows to return
-get_json_nearest <- function(path, endpoints, query, n) {
+get_json_nearest <- function(path, endpoints, query, n, verbose=FALSE) {
 	url <- build_url(
 		url = .unitUrl,
 		path = c("ServiceGuideService", endpoints, "json"),
 		params = query
 	)
-	cat(url, "\n")
+	
+	if (verbose) { cat(url, "\n") }
 	
 	x <- paste(readLines(url, warn = F), collapse="")
 	l <- fromJSON(x)

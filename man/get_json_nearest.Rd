@@ -2,7 +2,7 @@
 \alias{get_json_nearest}
 \title{Get JSON for schools}
 \usage{
-get_json_nearest(path, endpoints, query, n)
+get_json_nearest(path, endpoints, query, n, verbose = FALSE)
 }
 \arguments{
   \item{path}{URL path}
