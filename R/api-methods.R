@@ -217,7 +217,6 @@ GetNearestServiceUnit <- function(
 		n = n
 	)
 	
-	# TODO: NOT FINISHED
 	# Restructure the format of attributes
 	for(i in 1:length(x)) {
 		x[[i]]$Attributes <- sapply(x[[i]]$Attributes, function(i) {
