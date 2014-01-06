@@ -235,6 +235,7 @@ GetNearestServiceUnit <- function(
 	# Remove some attributes that has a bad structure
 	x <- remove_list_fields(x, c("RelatedServiceUnits"))
 	
-	x <- list_to_table(x)
+	x <- list_to_table(x, stringsAsFactors = F)
+	
 	return(x)
 }
