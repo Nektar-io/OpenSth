@@ -1,22 +1,10 @@
 \name{get_json_nearest}
 \alias{get_json_nearest}
-\title{Get XML}
+\title{Get JSON for schools}
 \usage{
 get_json_nearest(path, endpoints, query, n)
 }
 \arguments{
-  \item{path}{URL path}
-
-  \item{query}{URL query Get JSON
-
-  Get JSON data from the API.}
-
-  \item{path}{URL path}
-
-  \item{query}{URL query Get JSON for schools
-
-  Get JSON school data from the API.}
-
   \item{path}{URL path}
 
   \item{endpoints}{Node hierarchy}
@@ -26,6 +14,6 @@ get_json_nearest(path, endpoints, query, n)
   \item{n}{Number of rows to return}
 }
 \description{
-Get XML data from the API.
+Get JSON school data from the API.
 }
 
