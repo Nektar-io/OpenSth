@@ -178,7 +178,24 @@ get_json_nearest <- function(path, endpoints, query, n, verbose=FALSE) {
 	closestSchools <- head(l, n=n)
 }
 
-
+#' Get Image Url
+#' 
+#' Get Service Unit Image Url
+#' 
+#' @export
+GetServiceUnitImageUrl <- function(id, maxwidth = 500, maxheight = 500, allowstretching = F, allowenlarging = F) {
+	build_url(
+		url = .unitUrl,
+		path = c("ServiceGuideService", "ImageFiles", id, "Data"),
+		params = list(
+			apikey = .unitKey,
+			maxwidth = maxwidth,
+			maxheight = maxheight,
+			allowstretching = allowstretching,
+			allowenlarging = allowenlarging
+		)
+	)
+}
 
 #' Get data on the n nearest Service Units
 #' 
